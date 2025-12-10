@@ -1,0 +1,33 @@
+services:
+  frontend:
+    build: ./frontend
+    container_name: mean-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+  backend:
+    build: ./backend
+    container_name: mean-backend
+    ports:
+      - "5000:5000"
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/mean-db
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:6
+    container_name: mean-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
+
+
+
+
